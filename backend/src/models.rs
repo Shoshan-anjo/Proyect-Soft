@@ -1,11 +1,11 @@
 use diesel::prelude::*;
-use diesel::sql_types::*;
 use crate::schema::*;
+use serde::{Serialize, Deserialize};
 
 // =============================
 // 🧍 Tabla: clientes
 // =============================
-#[derive(Debug, Queryable, Insertable, Identifiable, Selectable)]
+#[derive(Debug, Queryable, Insertable, Identifiable, Serialize, Deserialize)]
 #[diesel(table_name = clientes)]
 pub struct Cliente {
     pub id: i32,
@@ -16,7 +16,7 @@ pub struct Cliente {
     pub fecha_registro: Option<chrono::NaiveDateTime>,
 }
 
-#[derive(Insertable)]
+#[derive(Insertable, Serialize, Deserialize)]
 #[diesel(table_name = clientes)]
 pub struct NewCliente<'a> {
     pub nombre: &'a str,
@@ -28,7 +28,7 @@ pub struct NewCliente<'a> {
 // =============================
 // 🏠 Tabla: cabanas
 // =============================
-#[derive(Debug, Queryable, Insertable, Identifiable, Selectable)]
+#[derive(Debug, Queryable, Insertable, Identifiable, Serialize, Deserialize)]
 #[diesel(table_name = cabanas)]
 pub struct Cabana {
     pub id: i32,
@@ -39,7 +39,7 @@ pub struct Cabana {
     pub descripcion: Option<String>,
 }
 
-#[derive(Insertable)]
+#[derive(Insertable, Serialize, Deserialize)]
 #[diesel(table_name = cabanas)]
 pub struct NewCabana<'a> {
     pub nombre: &'a str,
@@ -52,7 +52,7 @@ pub struct NewCabana<'a> {
 // =============================
 // 📅 Tabla: reservas
 // =============================
-#[derive(Debug, Queryable, Insertable, Identifiable, Associations, Selectable)]
+#[derive(Debug, Queryable, Insertable, Identifiable, Associations, Serialize, Deserialize)]
 #[diesel(belongs_to(Cliente))]
 #[diesel(belongs_to(Cabana))]
 #[diesel(table_name = reservas)]
@@ -68,7 +68,7 @@ pub struct Reserva {
     pub fecha_creacion: Option<chrono::NaiveDateTime>,
 }
 
-#[derive(Insertable)]
+#[derive(Insertable, Serialize, Deserialize)]
 #[diesel(table_name = reservas)]
 pub struct NewReserva {
     pub cliente_id: i32,
@@ -83,7 +83,7 @@ pub struct NewReserva {
 // =============================
 // 💳 Tabla: pagos
 // =============================
-#[derive(Debug, Queryable, Insertable, Identifiable, Associations, Selectable)]
+#[derive(Debug, Queryable, Insertable, Identifiable, Associations, Serialize, Deserialize)]
 #[diesel(belongs_to(Reserva))]
 #[diesel(table_name = pagos)]
 pub struct Pago {
@@ -95,7 +95,7 @@ pub struct Pago {
     pub fecha_pago: Option<chrono::NaiveDateTime>,
 }
 
-#[derive(Insertable)]
+#[derive(Insertable, Serialize, Deserialize)]
 #[diesel(table_name = pagos)]
 pub struct NewPago {
     pub reserva_id: i32,

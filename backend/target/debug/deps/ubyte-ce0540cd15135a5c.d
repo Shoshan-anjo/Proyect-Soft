@@ -1,0 +1,11 @@
+C:\Users\aj.montalvo\Rust\backend\target\debug\deps\ubyte-ce0540cd15135a5c.d: C:\Users\aj.montalvo\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ubyte-0.10.4\src\lib.rs C:\Users\aj.montalvo\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ubyte-0.10.4\src\arithmetic.rs C:\Users\aj.montalvo\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ubyte-0.10.4\src\byte_unit.rs C:\Users\aj.montalvo\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ubyte-0.10.4\src\parse.rs C:\Users\aj.montalvo\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ubyte-0.10.4\src\ser_de.rs
+
+C:\Users\aj.montalvo\Rust\backend\target\debug\deps\libubyte-ce0540cd15135a5c.rlib: C:\Users\aj.montalvo\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ubyte-0.10.4\src\lib.rs C:\Users\aj.montalvo\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ubyte-0.10.4\src\arithmetic.rs C:\Users\aj.montalvo\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ubyte-0.10.4\src\byte_unit.rs C:\Users\aj.montalvo\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ubyte-0.10.4\src\parse.rs C:\Users\aj.montalvo\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ubyte-0.10.4\src\ser_de.rs
+
+C:\Users\aj.montalvo\Rust\backend\target\debug\deps\libubyte-ce0540cd15135a5c.rmeta: C:\Users\aj.montalvo\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ubyte-0.10.4\src\lib.rs C:\Users\aj.montalvo\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ubyte-0.10.4\src\arithmetic.rs C:\Users\aj.montalvo\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ubyte-0.10.4\src\byte_unit.rs C:\Users\aj.montalvo\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ubyte-0.10.4\src\parse.rs C:\Users\aj.montalvo\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ubyte-0.10.4\src\ser_de.rs
+
+C:\Users\aj.montalvo\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ubyte-0.10.4\src\lib.rs:
+C:\Users\aj.montalvo\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ubyte-0.10.4\src\arithmetic.rs:
+C:\Users\aj.montalvo\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ubyte-0.10.4\src\byte_unit.rs:
+C:\Users\aj.montalvo\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ubyte-0.10.4\src\parse.rs:
+C:\Users\aj.montalvo\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ubyte-0.10.4\src\ser_de.rs:
