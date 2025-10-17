@@ -16,6 +16,7 @@ pub struct Cliente {
     pub fecha_registro: Option<chrono::NaiveDateTime>,
 }
 
+
 #[derive(Insertable, Serialize, Deserialize)]
 #[diesel(table_name = clientes)]
 pub struct NewCliente<'a> {
@@ -24,6 +25,7 @@ pub struct NewCliente<'a> {
     pub email: Option<&'a str>,
     pub dni: Option<&'a str>,
 }
+
 
 // =============================
 // 🏠 Tabla: cabanas
