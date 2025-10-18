@@ -1,3 +1,5 @@
+// @generated automatically by Diesel CLI.
+
 diesel::table! {
     cabanas (id) {
         id -> Int4,
@@ -9,6 +11,7 @@ diesel::table! {
         #[max_length = 20]
         estado -> Varchar,
         descripcion -> Nullable<Text>,
+        precio_hora -> Nullable<Numeric>,
     }
 }
 
@@ -24,6 +27,23 @@ diesel::table! {
         #[max_length = 30]
         dni -> Nullable<Varchar>,
         fecha_registro -> Nullable<Timestamp>,
+        activo -> Nullable<Bool>,
+    }
+}
+
+diesel::table! {
+    empleados (id) {
+        id -> Int4,
+        #[max_length = 100]
+        nombre -> Varchar,
+        #[max_length = 50]
+        cargo -> Varchar,
+        #[max_length = 20]
+        telefono -> Nullable<Varchar>,
+        #[max_length = 100]
+        email -> Nullable<Varchar>,
+        fecha_registro -> Nullable<Timestamp>,
+        activo -> Nullable<Bool>,
     }
 }
 
@@ -52,6 +72,7 @@ diesel::table! {
         estado -> Varchar,
         observaciones -> Nullable<Text>,
         fecha_creacion -> Nullable<Timestamp>,
+        precio_total -> Nullable<Numeric>,
     }
 }
 
@@ -59,4 +80,4 @@ diesel::joinable!(pagos -> reservas (reserva_id));
 diesel::joinable!(reservas -> cabanas (cabana_id));
 diesel::joinable!(reservas -> clientes (cliente_id));
 
-diesel::allow_tables_to_appear_in_same_query!(cabanas, clientes, pagos, reservas,);
+diesel::allow_tables_to_appear_in_same_query!(cabanas, clientes, empleados, pagos, reservas,);
