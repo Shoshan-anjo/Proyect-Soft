@@ -68,13 +68,13 @@ body {
    ✨ Tipografía y links
    ========================= */
 h1, h2, h3 {
-  color: #00377a;
+  color: #1d68c3;
   margin: 0 0 0.5rem 0;
 }
 
 a {
   font-weight: 500;
-  color: #00377a;
+  color: #186ed7;
   text-decoration: none;
 }
 a:hover {
@@ -91,7 +91,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #00377a;
+  background-color: #1b72dc;
   color: white;
   cursor: pointer;
   transition: background-color 0.25s, transform 0.2s ease;
