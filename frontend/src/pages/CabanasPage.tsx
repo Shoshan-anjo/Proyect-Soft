@@ -32,7 +32,7 @@ export default function CabanasPage() {
 
   return (
   <div className="container">
-    <h2 className="titulo">🏠 Cabañas disponibles</h2>
+    <h2 className="titulo">Cabañas disponibles</h2>
 
     <div className="cabanas-grid">
       {cabanas.length > 0 ? (

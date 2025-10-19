@@ -67,11 +67,14 @@ body {
 /* =========================
    ✨ Tipografía y links
    ========================= */
-h1, h2, h3 {
-  color: #1d68c3;
+h1 {
+  color: #ffffff;
   margin: 0 0 0.5rem 0;
 }
-
+h3 {
+  color: #2962f1;
+  margin: 0 0 0.5rem 0;
+}
 a {
   font-weight: 500;
   color: #186ed7;
