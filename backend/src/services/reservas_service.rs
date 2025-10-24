@@ -13,6 +13,8 @@ pub fn listar_reservas(conn: &mut PgConnection) -> QueryResult<Vec<Reserva>> {
 // =============================
 // ➕ Crear nueva reserva
 // =============================
+use diesel::result::Error;
+
 pub fn crear_reserva(conn: &mut PgConnection, nueva_reserva: NewReserva) -> QueryResult<Reserva> {
     conn.transaction(|conn| {
         // ✅ 1️⃣ Verificar conflicto antes de insertar
@@ -25,7 +27,11 @@ pub fn crear_reserva(conn: &mut PgConnection, nueva_reserva: NewReserva) -> Quer
         )?;
 
         if hay_conflicto {
-            return Err(diesel::result::Error::RollbackTransaction);
+            // ❌ Devolvemos error descriptivo
+            return Err(Error::DatabaseError(
+                diesel::result::DatabaseErrorKind::UniqueViolation,
+                Box::new("Conflicto de horario: ya existe una reserva para esa cabaña en ese horario".to_string()),
+            ));
         }
 
         // ✅ 2️⃣ Crear la reserva
@@ -33,7 +39,7 @@ pub fn crear_reserva(conn: &mut PgConnection, nueva_reserva: NewReserva) -> Quer
             .values(&nueva_reserva)
             .get_result::<Reserva>(conn)?;
 
-        // ✅ 3️⃣ Actualizar estado de la cabaña a "ocupada"
+        // ✅ 3️⃣ Marcar cabaña como "ocupada"
         diesel::update(cabanas::table.find(reserva.cabana_id))
             .set(cabanas::estado.eq("ocupada"))
             .execute(conn)?;
@@ -41,6 +47,7 @@ pub fn crear_reserva(conn: &mut PgConnection, nueva_reserva: NewReserva) -> Quer
         Ok(reserva)
     })
 }
+
 
 // =============================
 // ❌ Eliminar reserva

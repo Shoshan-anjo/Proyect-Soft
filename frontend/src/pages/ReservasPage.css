@@ -1,0 +1,115 @@
+.reservas-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+  color: #333;
+}
+
+.reservas-title {
+  text-align: center;
+  color: #00377a;
+  margin-bottom: 1.5rem;
+}
+
+.form-card,
+.table-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.form-card h3,
+.table-card h3 {
+  color: #00377a;
+  margin-bottom: 1rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.form-grid input,
+.form-grid button {
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+.form-grid button {
+  background-color: #007bff;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.form-grid button:hover {
+  background-color: #0056b3;
+}
+
+/* 📋 Tabla */
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.styled-table thead {
+  background-color: #00377a;
+  color: white;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 0.8rem;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.styled-table tbody tr:hover {
+  background-color: #f1f5ff;
+}
+
+.delete-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.delete-btn:hover {
+  background-color: #b02a37;
+}
+
+/* 🟢 Estados */
+.estado-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 6px;
+  color: white;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: capitalize;
+}
+
+.estado-badge.pendiente {
+  background-color: #ffc107;
+  color: #000;
+}
+
+.estado-badge.completada {
+  background-color: #28a745;
+}
+
+.estado-badge.cancelada {
+  background-color: #dc3545;
+}
