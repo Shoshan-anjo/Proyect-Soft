@@ -91,7 +91,7 @@ export default function ReservasPage() {
 
   return (
     <div className="container" style={{ padding: "20px" }}>
-      <h2>📅 Gestión de Reservas</h2>
+      <h2>Gestión de Reservas</h2>
 
       <div className="form" style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
         <input
@@ -130,7 +130,6 @@ export default function ReservasPage() {
         <table border={1} cellPadding={5}>
           <thead>
             <tr>
-              <th>ID</th>
               <th>Cabaña</th>
               <th>Fecha</th>
               <th>Inicio</th>
@@ -143,7 +142,6 @@ export default function ReservasPage() {
             {reservas.length > 0 ? (
               reservas.map((r) => (
                 <tr key={r.id}>
-                  <td>{r.id}</td>
                   <td>{r.cabana_id}</td>
                   <td>{dayjs(r.fecha_reserva).format("DD/MM/YYYY")}</td>
                   <td>{r.hora_inicio}</td>
