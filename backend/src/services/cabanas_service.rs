@@ -1,34 +1,19 @@
 use diesel::prelude::*;
-use crate::{
-    models::{Cabana, NewCabana},
-    schema::cabanas::dsl::*,
-};
+use crate::models::{Cabana, NewCabana};
+use crate::schema::cabanas;
 
-// ==============================
-// 📋 Listar cabañas
-// ==============================
 pub fn listar_cabanas(conn: &mut PgConnection) -> QueryResult<Vec<Cabana>> {
-    cabanas.order(id.desc()).load::<Cabana>(conn)
+    cabanas::table.load::<Cabana>(conn)
 }
 
-// ==============================
-// ➕ Crear nueva cabaña
-// ==============================
 pub fn crear_cabana(conn: &mut PgConnection, nueva: NewCabana) -> QueryResult<Cabana> {
-    diesel::insert_into(cabanas)
+    diesel::insert_into(cabanas::table)
         .values(&nueva)
-        .get_result::<Cabana>(conn)
+        .get_result(conn)
 }
 
-// ==============================
-// ♻️ Cambiar estado (disponible / ocupada / mantenimiento)
-// ==============================
-pub fn actualizar_estado(
-    conn: &mut PgConnection,
-    cabana_id: i32,
-    nuevo_estado: &str,
-) -> QueryResult<Cabana> {
-    diesel::update(cabanas.find(cabana_id))
-        .set(estado.eq(nuevo_estado))
-        .get_result::<Cabana>(conn)
+pub fn actualizar_estado(conn: &mut PgConnection, cabana_id: i32, nuevo_estado: &str) -> QueryResult<Cabana> {
+    diesel::update(cabanas::table.find(cabana_id))
+        .set(cabanas::estado.eq(nuevo_estado))
+        .get_result(conn)
 }

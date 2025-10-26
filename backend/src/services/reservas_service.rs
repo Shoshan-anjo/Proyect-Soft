@@ -1,45 +1,30 @@
 use diesel::prelude::*;
 use crate::models::{Reserva, NewReserva};
 use crate::schema::{reservas, cabanas};
-use crate::services::validaciones_service;
 
-// =============================
-// 📋 Listar reservas
-// =============================
 pub fn listar_reservas(conn: &mut PgConnection) -> QueryResult<Vec<Reserva>> {
     reservas::table.load::<Reserva>(conn)
 }
 
-// =============================
-// ➕ Crear nueva reserva
-// =============================
-use diesel::result::Error;
-
 pub fn crear_reserva(conn: &mut PgConnection, nueva_reserva: NewReserva) -> QueryResult<Reserva> {
     conn.transaction(|conn| {
-        // ✅ 1️⃣ Verificar conflicto antes de insertar
-        let hay_conflicto = validaciones_service::existe_conflicto(
+        // Validación de solapamiento
+        if crate::services::validaciones_service::existe_conflicto(
             conn,
             nueva_reserva.cabana_id,
             nueva_reserva.fecha_reserva,
             nueva_reserva.hora_inicio,
             nueva_reserva.hora_fin,
-        )?;
-
-        if hay_conflicto {
-            // ❌ Devolvemos error descriptivo
-            return Err(Error::DatabaseError(
-                diesel::result::DatabaseErrorKind::UniqueViolation,
-                Box::new("Conflicto de horario: ya existe una reserva para esa cabaña en ese horario".to_string()),
-            ));
+        )? {
+            return Err(diesel::result::Error::RollbackTransaction);
         }
 
-        // ✅ 2️⃣ Crear la reserva
+        // Insertar reserva
         let reserva = diesel::insert_into(reservas::table)
             .values(&nueva_reserva)
             .get_result::<Reserva>(conn)?;
 
-        // ✅ 3️⃣ Marcar cabaña como "ocupada"
+        // Marcar cabaña como ocupada (estado lógico)
         diesel::update(cabanas::table.find(reserva.cabana_id))
             .set(cabanas::estado.eq("ocupada"))
             .execute(conn)?;
@@ -48,45 +33,41 @@ pub fn crear_reserva(conn: &mut PgConnection, nueva_reserva: NewReserva) -> Quer
     })
 }
 
+pub fn eliminar_reserva(conn: &mut PgConnection, id: i32) -> QueryResult<usize> {
+    use crate::schema::cabanas::dsl::{cabanas, estado as estado_cabana};
 
-// =============================
-// ❌ Eliminar reserva
-// =============================
-pub fn eliminar_reserva(conn: &mut PgConnection, reserva_id: i32) -> QueryResult<usize> {
     conn.transaction(|conn| {
-        // 1️⃣ Buscar la reserva antes de eliminar
-        let reserva_eliminada: Reserva = reservas::table.find(reserva_id).first(conn)?;
+        let reserva: Reserva = reservas::table.find(id).first(conn)?;
 
-        // 2️⃣ Eliminar la reserva
-        let deleted = diesel::delete(reservas::table.find(reserva_id)).execute(conn)?;
+        // Eliminar reserva
+        let deleted = diesel::delete(reservas::table.find(id)).execute(conn)?;
 
-        // 3️⃣ Marcar la cabaña como "disponible"
-        diesel::update(cabanas::table.find(reserva_eliminada.cabana_id))
-            .set(cabanas::estado.eq("disponible"))
+        // Liberar cabaña
+        diesel::update(cabanas.find(reserva.cabana_id))
+            .set(estado_cabana.eq("disponible"))
             .execute(conn)?;
 
         Ok(deleted)
     })
 }
 
-// =============================
-// 🔄 Actualizar estado reserva
-// =============================
 pub fn actualizar_estado_reserva(
     conn: &mut PgConnection,
     reserva_id: i32,
     nuevo_estado: &str,
 ) -> QueryResult<Reserva> {
+    use crate::schema::reservas::dsl::{reservas, estado as estado_reserva};
+    use crate::schema::cabanas::dsl::{cabanas, estado as estado_cabana};
+
     conn.transaction(|conn| {
-        // 1️⃣ Actualizamos el estado de la reserva
-        let reserva_actualizada = diesel::update(reservas::table.find(reserva_id))
-            .set(reservas::estado.eq(nuevo_estado))
+        let reserva_actualizada = diesel::update(reservas.find(reserva_id))
+            .set(estado_reserva.eq(nuevo_estado))
             .get_result::<Reserva>(conn)?;
 
-        // 2️⃣ Si se completó o canceló, liberar la cabaña
-        if nuevo_estado == "completada" || nuevo_estado == "cancelada" {
-            diesel::update(cabanas::table.find(reserva_actualizada.cabana_id))
-                .set(cabanas::estado.eq("disponible"))
+        // Si se cancela o completa, liberar cabaña
+        if nuevo_estado == "cancelada" || nuevo_estado == "completada" {
+            diesel::update(cabanas.find(reserva_actualizada.cabana_id))
+                .set(estado_cabana.eq("disponible"))
                 .execute(conn)?;
         }
 

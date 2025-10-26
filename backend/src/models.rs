@@ -1,10 +1,9 @@
 use diesel::prelude::*;
 use crate::schema::*;
 use serde::{Serialize, Deserialize};
-use bigdecimal::BigDecimal;
 
 // =============================
-// 🧍 Tabla: clientes
+// 🧍 CLIENTES
 // =============================
 #[derive(Debug, Queryable, Identifiable, Serialize, Deserialize)]
 #[diesel(table_name = clientes)]
@@ -15,21 +14,19 @@ pub struct Cliente {
     pub email: Option<String>,
     pub dni: Option<String>,
     pub fecha_registro: Option<chrono::NaiveDateTime>,
-    pub activo: Option<bool>,
 }
 
-#[derive(Insertable, Serialize, Deserialize)]
+#[derive(Debug, Insertable, Serialize, Deserialize)]
 #[diesel(table_name = clientes)]
 pub struct NewCliente<'a> {
     pub nombre: &'a str,
     pub telefono: Option<&'a str>,
     pub email: Option<&'a str>,
     pub dni: Option<&'a str>,
-    pub activo: Option<bool>,
 }
 
 // =============================
-// 🏠 Tabla: cabanas
+// 🏠 CABAÑAS
 // =============================
 #[derive(Debug, Queryable, Identifiable, Serialize, Deserialize)]
 #[diesel(table_name = cabanas)]
@@ -40,10 +37,10 @@ pub struct Cabana {
     pub ubicacion: Option<String>,
     pub estado: String,
     pub descripcion: Option<String>,
-    pub precio_hora: Option<BigDecimal>,
+    pub precio_hora: Option<bigdecimal::BigDecimal>,
 }
 
-#[derive(Insertable, Serialize, Deserialize)]
+#[derive(Debug, Insertable, Serialize, Deserialize)]
 #[diesel(table_name = cabanas)]
 pub struct NewCabana<'a> {
     pub nombre: &'a str,
@@ -51,11 +48,11 @@ pub struct NewCabana<'a> {
     pub ubicacion: Option<&'a str>,
     pub estado: &'a str,
     pub descripcion: Option<&'a str>,
-    pub precio_hora: Option<BigDecimal>,
+    pub precio_hora: Option<bigdecimal::BigDecimal>,
 }
 
 // =============================
-// 📅 Tabla: reservas
+// 📅 RESERVAS
 // =============================
 #[derive(Debug, Queryable, Identifiable, Associations, Serialize, Deserialize)]
 #[diesel(belongs_to(Cliente))]
@@ -71,10 +68,9 @@ pub struct Reserva {
     pub estado: String,
     pub observaciones: Option<String>,
     pub fecha_creacion: Option<chrono::NaiveDateTime>,
-    pub precio_total: Option<BigDecimal>,
 }
 
-#[derive(Insertable, Serialize, Deserialize)]
+#[derive(Debug, Insertable, Serialize, Deserialize)]
 #[diesel(table_name = reservas)]
 pub struct NewReserva {
     pub cliente_id: i32,
@@ -84,54 +80,4 @@ pub struct NewReserva {
     pub hora_fin: chrono::NaiveTime,
     pub estado: String,
     pub observaciones: Option<String>,
-    pub precio_total: Option<BigDecimal>,
-}
-
-// =============================
-// 💳 Tabla: pagos
-// =============================
-#[derive(Debug, Queryable, Identifiable, Associations, Serialize, Deserialize)]
-#[diesel(belongs_to(Reserva))]
-#[diesel(table_name = pagos)]
-pub struct Pago {
-    pub id: i32,
-    pub reserva_id: i32,
-    pub monto: BigDecimal,
-    pub metodo: String,
-    pub estado: String,
-    pub fecha_pago: Option<chrono::NaiveDateTime>,
-}
-
-#[derive(Insertable, Serialize, Deserialize)]
-#[diesel(table_name = pagos)]
-pub struct NewPago {
-    pub reserva_id: i32,
-    pub monto: BigDecimal,
-    pub metodo: String,
-    pub estado: String,
-}
-
-// =============================
-// 👨‍🍳 Tabla: empleados
-// =============================
-#[derive(Debug, Queryable, Identifiable, Serialize, Deserialize)]
-#[diesel(table_name = empleados)]
-pub struct Empleado {
-    pub id: i32,
-    pub nombre: String,
-    pub cargo: String,
-    pub telefono: Option<String>,
-    pub email: Option<String>,
-    pub fecha_registro: Option<chrono::NaiveDateTime>,
-    pub activo: Option<bool>,
-}
-
-#[derive(Insertable, Serialize, Deserialize)]
-#[diesel(table_name = empleados)]
-pub struct NewEmpleado<'a> {
-    pub nombre: &'a str,
-    pub cargo: &'a str,
-    pub telefono: Option<&'a str>,
-    pub email: Option<&'a str>,
-    pub activo: Option<bool>,
 }

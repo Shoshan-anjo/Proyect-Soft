@@ -1,0 +1,7 @@
+INSERT INTO cabanas (nombre, capacidad, ubicacion, estado, descripcion, precio_hora)
+VALUES
+('Cabaña VIP 1', 6, 'Zona A - Frente al escenario', 'disponible', 'Cabaña privada con sistema de sonido y luces', 50.00),
+('Cabaña VIP 2', 8, 'Zona B - Cerca del bar', 'disponible', 'Cabaña para grupos grandes con pantalla LED', 70.00),
+('Cabaña Familiar 1', 10, 'Zona C - Patio exterior', 'disponible', 'Cabaña amplia con karaoke y ventilación natural', 90.00),
+('Cabaña Parejas', 2, 'Zona D - Área reservada', 'disponible', 'Cabaña romántica con luz tenue y privacidad', 40.00),
+('Cabaña Terraza', 4, 'Zona E - Azotea', 'disponible', 'Vista panorámica y ambiente chill', 60.00);

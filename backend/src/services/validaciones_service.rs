@@ -1,25 +1,24 @@
 use diesel::prelude::*;
-use crate::models::Reserva;
-use crate::schema::reservas::dsl::*;
 
-/// ✅ Verifica si una cabaña ya tiene reservas que se solapan en horario
+/// Retorna true si existe solapamiento con otra reserva en la misma cabaña y fecha
 pub fn existe_conflicto(
     conn: &mut PgConnection,
-    cabana: i32,
+    cabana_id_value: i32,
     fecha: chrono::NaiveDate,
     inicio: chrono::NaiveTime,
     fin: chrono::NaiveTime,
 ) -> QueryResult<bool> {
-    let conflicto = reservas
-        .filter(cabana_id.eq(cabana))
-        .filter(fecha_reserva.eq(fecha))
-        .filter(
-            hora_inicio.lt(fin)
-                .and(hora_fin.gt(inicio)),
-        )
-        .filter(estado.ne("cancelada"))
-        .first::<Reserva>(conn)
-        .optional()?; // devuelve Ok(None) si no hay conflicto
+    use crate::schema::reservas::dsl::*;
 
-    Ok(conflicto.is_some())
+    let count: i64 = reservas
+        .filter(cabana_id.eq(cabana_id_value))
+        .filter(fecha_reserva.eq(fecha))
+        // solapa si (inicio_a < fin_b) y (fin_a > inicio_b)
+        .filter(hora_inicio.lt(fin))
+        .filter(hora_fin.gt(inicio))
+        .filter(estado.ne("cancelada"))
+        .count()
+        .get_result(conn)?;
+
+    Ok(count > 0)
 }
