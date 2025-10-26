@@ -1,0 +1,94 @@
+.cabana-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  width: 240px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.cabana-card:hover {
+  transform: translateY(-4px);
+}
+
+.cabana-card.disponible {
+  border: 2px solid #28a745;
+}
+
+.cabana-card.ocupada {
+  border: 2px solid #dc3545;
+  background: #fff4f4;
+}
+
+.estado-label {
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-weight: bold;
+  color: white;
+  text-transform: capitalize;
+}
+
+.estado-label.verde {
+  background-color: #28a745;
+}
+
+.estado-label.rojo {
+  background-color: #dc3545;
+}
+
+/* Temporizador */
+.temporizador {
+  margin-top: 10px;
+  padding: 8px;
+  background-color: #00377a;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 600;
+  text-align: center;
+  font-size: 0.9rem;
+  position: relative;
+}
+
+.barra {
+  width: 100%;
+  height: 6px;
+  background: #e9ecef;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.barra-progreso {
+  height: 100%;
+  transition: width 0.5s ease;
+}
+
+/* 🔵 Pulso animado */
+.pulse-container {
+  position: absolute;
+  top: -6px;
+  right: 10px;
+}
+
+.pulse-dot {
+  width: 10px;
+  height: 10px;
+  background: #00b4ff;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.6);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
