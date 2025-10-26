@@ -71,3 +71,17 @@ VALUES
 ('Cabaña Parejas', 2, 'Zona D - Área reservada', 'disponible', 'Cabaña romántica con luz tenue y privacidad', 40.00),
 ('Cabaña Terraza', 4, 'Zona E - Azotea', 'disponible', 'Vista panorámica y ambiente chill', 60.00);
 
+-- 🧹 Eliminar todas las cabañas y reservas asociadas
+--DELETE FROM reservas;
+--DELETE FROM cabanas;
+
+-- 🧹 Reiniciar los contadores de las secuencias
+--ALTER SEQUENCE cabanas_id_seq RESTART WITH 1;
+
+---- 🌱 Insertar tus nuevas cabañas personalizadas
+--INSERT INTO cabanas (nombre, capacidad, ubicacion, estado, descripcion, precio_hora)
+--VALUES
+--('Cabaña Oro', 8, 'Sector VIP', 'disponible', 'Amplia cabaña con vista panorámica', 150.00),
+--('Cabaña Plata', 6, 'Zona Media', 'disponible', 'Ideal para grupos pequeños o familias', 120.00),
+--('Cabaña Bronze', 4, 'Zona Clásica', 'disponible', 'Ambiente acogedor con decoración rústica', 90.00),
+--('Cabaña Deluxe', 10, 'Vista Lago', 'disponible', 'Cabaña premium con jacuzzi privado', 200.00);
