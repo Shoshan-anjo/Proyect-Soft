@@ -69,11 +69,11 @@
 .styled-table td {
   padding: 0.8rem;
   text-align: center;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #dddddd;
 }
 
 .styled-table tbody tr:hover {
-  background-color: #f1f5ff;
+  background-color: #3760c8;
 }
 
 .delete-btn {
@@ -95,7 +95,7 @@
   display: inline-block;
   padding: 4px 8px;
   border-radius: 6px;
-  color: rgb(4, 0, 255);
+  color: rgb(248, 248, 248);
   font-weight: 600;
   font-size: 0.85rem;
   text-transform: capitalize;
