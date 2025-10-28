@@ -1,0 +1,2 @@
+ALTER TABLE reservas
+ALTER COLUMN estado DROP DEFAULT;

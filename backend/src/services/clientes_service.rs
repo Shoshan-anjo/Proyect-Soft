@@ -3,11 +3,13 @@ use crate::models::{Cliente, NewCliente};
 use crate::schema::clientes;
 
 pub fn listar_clientes(conn: &mut PgConnection) -> QueryResult<Vec<Cliente>> {
-    clientes::table.load::<Cliente>(conn)
+    clientes::table
+        .order(clientes::id.asc())
+        .load::<Cliente>(conn)
 }
 
 pub fn crear_cliente(conn: &mut PgConnection, nuevo: NewCliente) -> QueryResult<Cliente> {
     diesel::insert_into(clientes::table)
         .values(&nuevo)
-        .get_result(conn)
+        .get_result::<Cliente>(conn)
 }

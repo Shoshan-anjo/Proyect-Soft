@@ -70,6 +70,12 @@ pub struct Reserva {
     pub fecha_creacion: Option<chrono::NaiveDateTime>,
 }
 
+// ⚙️ Valor por defecto para el campo "estado"
+fn estado_por_defecto() -> String {
+    "pendiente".to_string()
+}
+
+
 #[derive(Debug, Insertable, Serialize, Deserialize)]
 #[diesel(table_name = reservas)]
 pub struct NewReserva {
@@ -78,6 +84,8 @@ pub struct NewReserva {
     pub fecha_reserva: chrono::NaiveDate,
     pub hora_inicio: chrono::NaiveTime,
     pub hora_fin: chrono::NaiveTime,
+    #[serde(default = "estado_por_defecto")] // 👈 Valor por defecto si no se envía
     pub estado: String,
     pub observaciones: Option<String>,
 }
+

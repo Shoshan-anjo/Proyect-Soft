@@ -15,7 +15,6 @@ export interface Cabana {
 export default function CabanasPage() {
   const [cabanas, setCabanas] = useState<Cabana[]>([]);
 
-  // 🔄 Cargar y ordenar por ID
   const cargar = async () => {
     try {
       const res = await api.get<Cabana[]>("/cabanas");
@@ -28,20 +27,41 @@ export default function CabanasPage() {
 
   useEffect(() => {
     void cargar();
+
+    const base = api.defaults.baseURL ?? "";
+    const wsUrl = `${base}/ws`;
+
+    let eventSource = new EventSource(wsUrl);
+    console.log("🌐 Conectado a SSE:", wsUrl);
+
+    eventSource.onmessage = (event) => {
+      if (event.data === "actualizar") {
+        console.log("🔁 Recibido evento 'actualizar' → recargando cabañas");
+        cargar();
+      }
+    };
+
+    eventSource.onerror = (err) => {
+      console.warn("⚠️ Conexión SSE perdida, reconectando...", err);
+      eventSource.close();
+      setTimeout(() => {
+        eventSource = new EventSource(wsUrl);
+      }, 2000);
+    };
+
+    return () => eventSource.close();
   }, []);
 
   return (
-  <div className="container">
-    <h2 className="titulo">Cabañas disponibles</h2>
-
-    <div className="cabanas-grid">
-      {cabanas.length > 0 ? (
-        cabanas.map((c) => <CabanaCard key={c.id} cabana={c} />)
-      ) : (
-        <p>No hay cabañas registradas.</p>
-      )}
+    <div className="container">
+      <h2 className="titulo">Cabañas en tiempo real 🏠</h2>
+      <div className="cabanas-grid">
+        {cabanas.length > 0 ? (
+          cabanas.map((c) => <CabanaCard key={c.id} cabana={c} />)
+        ) : (
+          <p>No hay cabañas registradas.</p>
+        )}
+      </div>
     </div>
-  </div>
-);
-
+  );
 }
